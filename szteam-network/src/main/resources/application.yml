@@ -4,9 +4,14 @@ spring:
   servlet:
     multipart:
       max-file-size: 60MB
+  liquibase:
+    enabled: false
+
 springdoc:
   default-produces-media-type: application/json
 
 server:
   servlet:
     context-path: /api/v1/
+
+

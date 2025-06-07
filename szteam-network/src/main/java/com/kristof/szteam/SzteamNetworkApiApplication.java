@@ -12,10 +12,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
-@EnableJpaAuditing
+@EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @EnableAsync
-@EntityScan({"com.kristof.szteam.user", "com.kristof.szteam.role"})
-@EnableJpaRepositories({"com.kristof.szteam.user", "com.kristof.szteam.role"})
+@EntityScan({"com.kristof.szteam.user", "com.kristof.szteam.role", "com.kristof.szteam.game", "com.kristof.szteam.review", "com.kristof.szteam.history"})
+@EnableJpaRepositories({"com.kristof.szteam.user", "com.kristof.szteam.role", "com.kristof.szteam.game", "com.kristof.szteam.review", "com.kristof.szteam.history"})
 public class SzteamNetworkApiApplication {
 
 	public static void main(String[] args) {

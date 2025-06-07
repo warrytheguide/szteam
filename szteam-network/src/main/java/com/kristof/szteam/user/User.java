@@ -1,5 +1,7 @@
 package com.kristof.szteam.user;
 
+import com.kristof.szteam.game.Game;
+import com.kristof.szteam.history.GameTransactionHistory;
 import com.kristof.szteam.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -41,6 +43,11 @@ public class User implements UserDetails, Principal {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
 
+    @OneToMany(mappedBy = "owner")
+    private List<Game> games;
+
+    @OneToMany(mappedBy = "user")
+    private List<GameTransactionHistory> histories;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

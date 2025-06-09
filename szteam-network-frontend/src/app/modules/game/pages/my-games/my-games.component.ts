@@ -1,28 +1,28 @@
 import {Component, OnInit} from '@angular/core';
-import {GameService} from '../../../../services/services/game.service';
-import {Router} from '@angular/router';
-import {PageResponseGameResponse} from '../../../../services/models/page-response-game-response';
-import {NgForOf, NgIf} from '@angular/common';
 import {GameCardComponent} from '../../components/game-card/game-card.component';
+import {NgForOf, NgIf} from '@angular/common';
+import {PageResponseGameResponse} from '../../../../services/models/page-response-game-response';
+import {GameService} from '../../../../services/services/game.service';
+import {Router, RouterLink} from '@angular/router';
 import {GameResponse} from '../../../../services/models/game-response';
 
 @Component({
-  selector: 'app-game-list',
+  selector: 'app-my-games',
   imports: [
-    NgForOf,
     GameCardComponent,
-    NgIf
+    NgForOf,
+    NgIf,
+    RouterLink
   ],
-  templateUrl: './game-list.component.html',
+  templateUrl: './my-games.component.html',
   standalone: true,
-  styleUrl: './game-list.component.scss'
+  styleUrl: './my-games.component.scss'
 })
-export class GameListComponent implements OnInit {
+export class MyGamesComponent implements OnInit {
   gameResponse: PageResponseGameResponse = {};
   protected page: number = 0;
   private size: number = 5;
-  message: string = '';
-  level: string = 'success';
+
 
   constructor(
     private gameService: GameService,
@@ -31,11 +31,11 @@ export class GameListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-        this.findAllGames()
-    }
+    this.findAllGames()
+  }
 
   private findAllGames() {
-    this.gameService.findAllGames({
+    this.gameService.findAllGamesByOwner({
       page: this.page,
       size: this.size
     }).subscribe({
@@ -74,22 +74,15 @@ export class GameListComponent implements OnInit {
     return this.page == this.gameResponse.totalPages as number - 1;
   }
 
-  borrowGame(game: GameResponse) {
-    this.message = '';
-    this.gameService.borrowGame({
-      'game-id': game.id as number,
-    }).subscribe({
-      next:() =>{
-        this.level = 'success';
-        this.message = 'A játék sikeresen kikölcsönözve!';
-      },
-      error: (err) => {
-        console.log(err);
-        this.level = 'error';
-        this.message = err.error.error;
-      }
-    })
+  archiveGame($event: GameResponse) {
+
+  }
+
+  shareGame($event: GameResponse) {
+
+  }
+
+  editGame($event: GameResponse) {
 
   }
 }
-

@@ -2,5 +2,31 @@
   class="card"
   style="width: 20rem;"
 >
-  <img height="200" [src]="gameCover" class ="card-img-top" alt="...">
+  <img height="400" [src]="gameCover" class ="card-img-top" alt="...">
+  <div class="card-body overflow-scroll">
+    <h5 class="card-title fs-6 text-nowrap fw-bold mb-1"><i class="fa-solid fa-gamepad"></i>&nbsp;{{game.title}}</h5>
+    <h5 class="card-subtitle fs-6 text-secondary mb-1"><i class="fa-solid fa-user-check"></i>&nbsp;{{game.publisher}}</h5>
+    <h6 class="card-subtitle fs-6 text-secondary mb-1"><i class="fa-solid fa-calendar"></i>&nbsp;{{game.releaseDate}}</h6>
+    <h6 class="card-subtitle fs-6 text-secondary"><i class="fa-solid fa-user"></i>&nbsp;{{game.owner}}</h6>
+    <hr>
+    <p class="card-text">{{game.description}}</p>
+  </div>
+  <div class="card-footer d-flex gap-2 justify-content-between align-items-center">
+    <div class="d.flex gap-2">
+        <app-rating [rating]="game.rate || 0"></app-rating>
+        <span class="fw-bold" *ngIf="game.rate || 0 > 0">
+          {{game.rate}}
+        </span>
+    </div>
+    <div class="d-flex gap-2" *ngIf="!manage">
+      <i (click)="onShowDetails()" class="fas fa-circle-info text-primary"></i>
+      <i (click)="onBorrow()" class="fas fa-list-check text-primary"></i>
+      <i (click)="onAddToWaitingList()" class="fas fa-heart text-primary"></i>
+    </div>
+    <div class="d-flex gap-2" *ngIf="manage">
+      <i (click)="onEdit()" class="fas fa-edit text-success"></i>
+      <i (click)="onShare()" class="fas fa-share-nodes text-primary"></i>
+      <i (click)="onArchive()" class="fas fa-archive text-danger"></i>
+    </div>
+  </div>
 </div>

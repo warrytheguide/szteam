@@ -40,7 +40,7 @@ public class GameService {
     public GameResponse findById(Integer gameId) {
         return gameRepository.findById(gameId)
                 .map(gameMapper::toGameResponse)
-                .orElseThrow(() -> new EntityNotFoundException("Nincs ilyen ID konyv:: " + gameId));
+                .orElseThrow(() -> new EntityNotFoundException("A játék nem található: " + gameId));
     }
 
     public PageResponse<GameResponse> findAllGames(int page, int size, Authentication connectedUser) {
@@ -118,10 +118,10 @@ public class GameService {
 
     public Integer updateSharableStatus(Integer gameId, Authentication connectedUser) {
         Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new EntityNotFoundException("Nincs ilyen ID konyv:: " + gameId));
+                .orElseThrow(() -> new EntityNotFoundException("A játék nem található: " + gameId));
         User user = ((User) connectedUser.getPrincipal());
         if(!Objects.equals(game.getOwner().getId(), user.getId())) {
-            throw new OperationNotPermittedException("Nem valtoztathatod meg a jatek oszthatosag statuszat, mert nem a tied");
+            throw new OperationNotPermittedException("Nem változtathatod meg a játék megoszthatóságát, mert nem te vagy a tulajdonosa!");
 
         }
         game.setShareable(!game.isShareable());
@@ -131,10 +131,10 @@ public class GameService {
 
     public Integer updateArchivedStatus(Integer gameId, Authentication connectedUser) {
         Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new EntityNotFoundException("Nincs ilyen ID konyv:: " + gameId));
+                .orElseThrow(() -> new EntityNotFoundException("A játék nem található: " + gameId));
         User user = ((User) connectedUser.getPrincipal());
         if(!Objects.equals(game.getOwner().getId(), user.getId())) {
-            throw new OperationNotPermittedException("Nem valtoztathatod meg a jatek archivalt statuszat, mert nem a tied");
+            throw new OperationNotPermittedException("Nem változtathatod meg a játék archivált státuszát, mert nem te vagy a tulajdonosa!");
         }
         game.setArchived(!game.isArchived());
         gameRepository.save(game);
@@ -143,17 +143,17 @@ public class GameService {
 
     public Integer borrowGame(Integer gameId, Authentication connectedUser) {
         Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new EntityNotFoundException("Nincs ilyen ID konyv:: " + gameId));
+                .orElseThrow(() -> new EntityNotFoundException("A játék nem található: " + gameId));
         if(game.isArchived() || !game.isShareable()){
-            throw new OperationNotPermittedException("Ezt a jatekot nem tudod kolcsonozni mert nem megoszthato vagy archivalva van");
+            throw new OperationNotPermittedException("Ez a játék nem kikölcsönözhető, vagy archiválva van!");
         }
         User user = ((User) connectedUser.getPrincipal());
         if(Objects.equals(game.getOwner().getId(), user.getId())) {
-            throw new OperationNotPermittedException("A sajat jatekodat nem kolcsonozheted");
+            throw new OperationNotPermittedException("A saját játékod nem kölcsönözheted ki!");
         }
         final boolean isAlreadyBorrowed = transactionHistoryRepository.isAlreadyBorrowedByUser(gameId, user.getId());
         if(isAlreadyBorrowed) {
-            throw new OperationNotPermittedException("A jatek mar ki van kolcsonozve");
+            throw new OperationNotPermittedException("Ez a játék már ki van kölcsönözve!");
         }
         GameTransactionHistory gameTransactionHistory = GameTransactionHistory.builder()
                 .user(user)
@@ -166,39 +166,39 @@ public class GameService {
 
     public Integer returnBorrowedGame(Integer gameId, Authentication connectedUser) {
         Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new EntityNotFoundException("Nincs ilyen ID konyv:: " + gameId));
+                .orElseThrow(() -> new EntityNotFoundException("A játék nem található: " + gameId));
         if(game.isArchived() || !game.isShareable()){
-            throw new OperationNotPermittedException("Ezt a jatekot nem tudod kolcsonozni mert nem megoszthato vagy archivalva van");
+            throw new OperationNotPermittedException("Ez a játék nem kikölcsönözhető, vagy archiválva van!");
         }
         User user = ((User) connectedUser.getPrincipal());
         if(Objects.equals(game.getOwner().getId(), user.getId())) {
-            throw new OperationNotPermittedException("A sajat jatekodat nem visszaadni");
+            throw new OperationNotPermittedException("A saját játékod nem tudod visszajuttatni!");
         }
         GameTransactionHistory gameTransactionHistory = transactionHistoryRepository.findByGameIdAndUserId(gameId, user.getId())
-                .orElseThrow(() -> new OperationNotPermittedException("Nem te kolcsonozted ezt a jatekot"));
+                .orElseThrow(() -> new OperationNotPermittedException("Nem te kölcsönözted ki ezt a játékot!"));
         gameTransactionHistory.setReturned(true);
         return transactionHistoryRepository.save(gameTransactionHistory).getId();
     }
 
     public Integer approveReturnBorrowedGame(Integer gameId, Authentication connectedUser) {
         Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new EntityNotFoundException("Nincs ilyen ID konyv:: " + gameId));
+                .orElseThrow(() -> new EntityNotFoundException("A játék nem található: " + gameId));
         if(game.isArchived() || !game.isShareable()){
-            throw new OperationNotPermittedException("Ezt a jatekot nem tudod kolcsonozni mert nem megoszthato vagy archivalva van");
+            throw new OperationNotPermittedException("Ez a játék nem kikölcsönözhető, vagy archiválva van!");
         }
         User user = ((User) connectedUser.getPrincipal());
         if(Objects.equals(game.getOwner().getId(), user.getId())) {
-            throw new OperationNotPermittedException("A sajat jatekodat nem visszaadni");
+            throw new OperationNotPermittedException("A saját játékod nem tudod visszajuttatni!");
         }
         GameTransactionHistory gameTransactionHistory = transactionHistoryRepository.findByGameIdAndOwnerId(gameId, user.getId())
-                .orElseThrow(() -> new OperationNotPermittedException("A jatek nincs visszaadva meg, szoval nem tudsz beleegyezni"));
+                .orElseThrow(() -> new OperationNotPermittedException("A játék még nem lett visszajuttatva, így nem tudod jóváhagyni!"));
         gameTransactionHistory.setReturnApproved(true);
         return transactionHistoryRepository.save(gameTransactionHistory).getId();
     }
 
     public void uploadGameCoverPicture(MultipartFile file, Authentication connectedUser, Integer gameId) {
         Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new EntityNotFoundException("Nincs ilyen ID konyv:: " + gameId));
+                .orElseThrow(() -> new EntityNotFoundException("A játék nem található: " + gameId));
         User user = ((User) connectedUser.getPrincipal());
         var gameCover = fileStorageService.saveFile(file, user.getId());
         game.setGameCover(gameCover);

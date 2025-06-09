@@ -1,0 +1,5 @@
+<h3>Games list</h3>
+<hr>
+<div class="d-flex justify-content-start gap-2 flex-wrap">
+  <app-game-card [game]="game" *ngFor="let game of gameResponse.content">{{game.title}}</app-game-card>
+</div>

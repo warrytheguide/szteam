@@ -14,11 +14,11 @@ import lombok.Setter;
 public class AuthenticationRequest {
 
     @Email(message = "Helytelen email!")
-    @NotEmpty(message = "Email megadása kötelező")
-    @NotBlank(message = "Email megadása kötelező")
+    @NotEmpty(message = "Email megadása kötelező!")
+    @NotBlank(message = "Email megadása kötelező!")
     private String email;
-    @NotEmpty(message = "Jelszó megadása kötelező")
-    @NotBlank(message = "Jelszó megadása kötelező")
+    @NotEmpty(message = "Jelszó megadása kötelező!")
+    @NotBlank(message = "Jelszó megadása kötelező!")
     @Size(min = 8, message = "A jelszónak legalább 8 karakter hosszúnak kell lennie!")
     private String password;
 }

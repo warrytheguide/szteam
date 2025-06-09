@@ -1,0 +1,27 @@
+<div class ="container-fluid card login-container">
+  <hr>
+  <h3 class="text-center">Bejelentkezés</h3>
+  <hr>
+  <div class="alert alert-danger" role="alert" *ngIf="errorMsg.length">
+    <p *ngFor="let msg of errorMsg">{{msg}}</p>
+  </div>
+  <div class="mb-3">
+    <label for="login" class="form-label">Email cím</label>
+    <input [(ngModel)]="authRequest.email" type="email" class="form-control" id = "login" placeholder="email@cím.hu">
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Jelszó</label>
+    <input [(ngModel)]="authRequest.password" type="password" class="form-control" id = "password" placeholder="jelszó123">
+  </div>
+  <div class="d-flex justify-content-between mb-3">
+    <button (click)="login()" type="button" class="btn btn-primary">
+      <em class="fas fa-sign-in-alt"></em>&nbsp;Bejelentkezés
+    </button>
+    <div>
+      Nincs még fiókod?&nbsp;
+      <button (click)="register()" type="button" class="btn btn-link">
+        Regisztrálás
+      </button>
+    </div>
+  </div>
+</div>

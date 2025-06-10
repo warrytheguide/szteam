@@ -78,11 +78,17 @@ export class MyGamesComponent implements OnInit {
 
   }
 
-  shareGame($event: GameResponse) {
-
+  shareGame(game: GameResponse) {
+    this.gameService.updateSharableStatus({
+      'game-id': game.id as number
+    }).subscribe({
+      next:() =>{
+        game.shareable = !game.shareable;
+      }
+    })
   }
 
-  editGame($event: GameResponse) {
-
+  editGame(game: GameResponse) {
+    this.router.navigate(['games', 'manage', game.id]);
   }
 }

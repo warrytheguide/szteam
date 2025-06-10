@@ -150,7 +150,7 @@ export class GameService extends BaseService {
   }
 
   /** Path part for operation `updateSharableStatus()` */
-  static readonly UpdateSharableStatusPath = '/games/shareable/{book-id}';
+  static readonly UpdateSharableStatusPath = '/games/shareable/{game-id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -158,7 +158,7 @@ export class GameService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  updateSharableStatus$Response(params?: UpdateSharableStatus$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
+  updateSharableStatus$Response(params: UpdateSharableStatus$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
     return updateSharableStatus(this.http, this.rootUrl, params, context);
   }
 
@@ -168,7 +168,7 @@ export class GameService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  updateSharableStatus(params?: UpdateSharableStatus$Params, context?: HttpContext): Observable<number> {
+  updateSharableStatus(params: UpdateSharableStatus$Params, context?: HttpContext): Observable<number> {
     return this.updateSharableStatus$Response(params, context).pipe(
       map((r: StrictHttpResponse<number>): number => r.body)
     );
@@ -225,7 +225,7 @@ export class GameService extends BaseService {
   }
 
   /** Path part for operation `updateArchivedStatus()` */
-  static readonly UpdateArchivedStatusPath = '/games/archived/{book-id}';
+  static readonly UpdateArchivedStatusPath = '/games/archived/{game-id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -233,7 +233,7 @@ export class GameService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  updateArchivedStatus$Response(params?: UpdateArchivedStatus$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
+  updateArchivedStatus$Response(params: UpdateArchivedStatus$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
     return updateArchivedStatus(this.http, this.rootUrl, params, context);
   }
 
@@ -243,7 +243,7 @@ export class GameService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  updateArchivedStatus(params?: UpdateArchivedStatus$Params, context?: HttpContext): Observable<number> {
+  updateArchivedStatus(params: UpdateArchivedStatus$Params, context?: HttpContext): Observable<number> {
     return this.updateArchivedStatus$Response(params, context).pipe(
       map((r: StrictHttpResponse<number>): number => r.body)
     );
@@ -258,7 +258,7 @@ export class GameService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  findGameById$Response(params?: FindGameById$Params, context?: HttpContext): Observable<StrictHttpResponse<GameResponse>> {
+  findGameById$Response(params: FindGameById$Params, context?: HttpContext): Observable<StrictHttpResponse<GameResponse>> {
     return findGameById(this.http, this.rootUrl, params, context);
   }
 
@@ -268,7 +268,7 @@ export class GameService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  findGameById(params?: FindGameById$Params, context?: HttpContext): Observable<GameResponse> {
+  findGameById(params: FindGameById$Params, context?: HttpContext): Observable<GameResponse> {
     return this.findGameById$Response(params, context).pipe(
       map((r: StrictHttpResponse<GameResponse>): GameResponse => r.body)
     );

@@ -26,9 +26,9 @@ public class GameController {
         return ResponseEntity.ok(service.save(request, connectedUser));
     }
 
-    @GetMapping("{game-id}")
+    @GetMapping("/{game-id}")
     public ResponseEntity<GameResponse> findGameById(
-            @PathVariable("{game-id}") Integer gameId
+            @PathVariable("game-id") Integer gameId
     ){
         return ResponseEntity.ok(service.findById(gameId));
     }
@@ -69,7 +69,7 @@ public class GameController {
         return ResponseEntity.ok(service.findAllReturnedGames(page,size,connectedUser));
     }
 
-    @PatchMapping("/shareable/{book-id}")
+    @PatchMapping("/shareable/{game-id}")
     public ResponseEntity<Integer> updateSharableStatus(
             @PathVariable("game-id") Integer gameId,
             Authentication connectedUser
@@ -77,7 +77,7 @@ public class GameController {
         return ResponseEntity.ok(service.updateSharableStatus(gameId, connectedUser));
     }
 
-    @PatchMapping("/archived/{book-id}")
+    @PatchMapping("/archived/{game-id}")
     public ResponseEntity<Integer> updateArchivedStatus(
             @PathVariable("game-id") Integer gameId,
             Authentication connectedUser
@@ -85,7 +85,7 @@ public class GameController {
         return ResponseEntity.ok(service.updateArchivedStatus(gameId, connectedUser));
     }
 
-    @PostMapping("/borrow/{game-id}")
+    @PostMapping("borrow/{game-id}")
     public ResponseEntity<Integer> borrowGame(
             @PathVariable("game-id") Integer gameId,
             Authentication connectedUser

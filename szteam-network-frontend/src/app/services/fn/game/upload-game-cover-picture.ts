@@ -12,7 +12,7 @@ import { RequestBuilder } from '../../request-builder';
 export interface UploadGameCoverPicture$Params {
   'game-id': number;
       body?: {
-'file': Blob;
+'file'?: Blob;
 }
 }
 

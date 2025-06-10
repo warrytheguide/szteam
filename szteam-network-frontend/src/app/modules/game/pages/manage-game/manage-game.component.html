@@ -21,11 +21,11 @@
       <form class="row g-3">
         <div class="col-12">
           <label for="title" class="form-label">Cím</label>
-          <input [(ngModel)]="gameRequest.title" name="title" type="text" class="form-control" id="title" placeholder="Játék címe">
+          <input [(ngModel)]="gameRequest.title" name="title" type="text" class="form-control" id="title" placeholder="Játék címe" maxlength="255">
         </div>
         <div class="col-6">
           <label for="publisher" class="form-label">Kiadó</label>
-          <input [(ngModel)]="gameRequest.publisher" name="publisher" type="text" class="form-control" id="publisher" placeholder="Kiadó neve">
+          <input [(ngModel)]="gameRequest.publisher" name="publisher" type="text" class="form-control" id="publisher" placeholder="Kiadó neve" maxlength="255">
         </div>
         <div class="col-6">
           <label for="releaseDate" class="form-label">Megjelenés dátuma</label>
@@ -33,7 +33,12 @@
         </div>
         <div class="col-12">
           <label for="title" class="form-label">Leírás</label>
-          <textarea [(ngModel)]="gameRequest.description" name="description" rows="4" class="form-control" id="description" placeholder="Játék leírása"></textarea>
+          <textarea [(ngModel)]="gameRequest.description" name="description" rows="4" class="form-control" id="description" placeholder="Játék leírása" maxlength="255"></textarea>
+          <div class="d-flex justify-content-between align-items-center mt-1">
+            <small>
+              {{gameRequest.description?.length || 0}} / 255 karakter
+            </small>
+          </div>
         </div>
         <div class="col-12">
           <input [(ngModel)]="gameRequest.shareable" name="shareable" class="form-check-input" type="checkbox" id="share">

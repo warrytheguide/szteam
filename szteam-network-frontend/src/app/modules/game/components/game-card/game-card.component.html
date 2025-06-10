@@ -1,15 +1,26 @@
 <div
-  class="card"
+  class="card border-3"
   style="width: 20rem;"
+  [class.border-success]="game.shareable"
+  [class.border-warning]="game.archived"
 >
-  <img height="400" [src]="gameCover" class ="card-img-top" alt="...">
-  <div class="card-body overflow-scroll">
-    <h5 class="card-title fs-6 text-nowrap fw-bold mb-1"><i class="fa-solid fa-gamepad"></i>&nbsp;{{game.title}}</h5>
-    <h5 class="card-subtitle fs-6 text-secondary mb-1"><i class="fa-solid fa-user-check"></i>&nbsp;{{game.publisher}}</h5>
+  <div class="image-border mb-3">
+    <img [src]="gameCover" class="card-img-top game-cover-img" alt="...">
+  </div>
+  <div class="card-body">
+    <h5 class="card-title-publisher fs-6 fw-bold mb-1" [attr.title]="game.title">
+      <i class="fa-solid fa-gamepad"></i>
+      <span class="text-truncate-multiline">{{game.title}}</span>
+    </h5>
+
+    <h5 class="card-title-publisher fs-6 text-secondary mb-1" [attr.title]="game.publisher">
+      <i class="fa-solid fa-users"></i>
+      <span class="text-truncate-multiline">{{game.publisher}}</span>
+    </h5>
     <h6 class="card-subtitle fs-6 text-secondary mb-1"><i class="fa-solid fa-calendar"></i>&nbsp;{{game.releaseDate}}</h6>
-    <h6 class="card-subtitle fs-6 text-secondary"><i class="fa-solid fa-user"></i>&nbsp;{{game.owner}}</h6>
+    <h6 class="card-subtitle fs-6 text-secondary"><i class="fa-solid fa-user-check"></i>&nbsp;{{game.owner}}</h6>
     <hr>
-    <p class="card-text">{{game.description}}</p>
+    <div class="card-text description-scroll">{{game.description}}</div>
   </div>
   <div class="card-footer d-flex gap-2 justify-content-between align-items-center">
     <div class="d.flex gap-2">

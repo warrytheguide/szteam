@@ -10,11 +10,13 @@ import { RequestBuilder } from '../../request-builder';
 
 
 export interface UpdateSharableStatus$Params {
+  'game-id': number;
 }
 
-export function updateSharableStatus(http: HttpClient, rootUrl: string, params?: UpdateSharableStatus$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
+export function updateSharableStatus(http: HttpClient, rootUrl: string, params: UpdateSharableStatus$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
   const rb = new RequestBuilder(rootUrl, updateSharableStatus.PATH, 'patch');
   if (params) {
+    rb.path('game-id', params['game-id'], {});
   }
 
   return http.request(
@@ -27,4 +29,4 @@ export function updateSharableStatus(http: HttpClient, rootUrl: string, params?:
   );
 }
 
-updateSharableStatus.PATH = '/games/shareable/{book-id}';
+updateSharableStatus.PATH = '/games/shareable/{game-id}';

@@ -10,11 +10,13 @@ import { RequestBuilder } from '../../request-builder';
 
 
 export interface UpdateArchivedStatus$Params {
+  'game-id': number;
 }
 
-export function updateArchivedStatus(http: HttpClient, rootUrl: string, params?: UpdateArchivedStatus$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
+export function updateArchivedStatus(http: HttpClient, rootUrl: string, params: UpdateArchivedStatus$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
   const rb = new RequestBuilder(rootUrl, updateArchivedStatus.PATH, 'patch');
   if (params) {
+    rb.path('game-id', params['game-id'], {});
   }
 
   return http.request(
@@ -27,4 +29,4 @@ export function updateArchivedStatus(http: HttpClient, rootUrl: string, params?:
   );
 }
 
-updateArchivedStatus.PATH = '/games/archived/{book-id}';
+updateArchivedStatus.PATH = '/games/archived/{game-id}';

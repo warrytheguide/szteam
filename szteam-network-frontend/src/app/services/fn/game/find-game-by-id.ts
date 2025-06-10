@@ -11,11 +11,13 @@ import { RequestBuilder } from '../../request-builder';
 import { GameResponse } from '../../models/game-response';
 
 export interface FindGameById$Params {
+  'game-id': number;
 }
 
-export function findGameById(http: HttpClient, rootUrl: string, params?: FindGameById$Params, context?: HttpContext): Observable<StrictHttpResponse<GameResponse>> {
+export function findGameById(http: HttpClient, rootUrl: string, params: FindGameById$Params, context?: HttpContext): Observable<StrictHttpResponse<GameResponse>> {
   const rb = new RequestBuilder(rootUrl, findGameById.PATH, 'get');
   if (params) {
+    rb.path('game-id', params['game-id'], {});
   }
 
   return http.request(

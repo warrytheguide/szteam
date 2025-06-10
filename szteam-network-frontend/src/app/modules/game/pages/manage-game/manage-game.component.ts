@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import {NgForOf, NgIf} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {CommonModule, NgForOf, NgIf} from '@angular/common';
 import {DEFAULT_IMAGE_BASE64} from '../../../../shared/default-image';
 import {GameRequest} from '../../../../services/models/game-request';
 import {FormsModule} from '@angular/forms';
-import {Router, RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {GameService} from '../../../../services/services/game.service';
 
 @Component({
@@ -12,13 +12,14 @@ import {GameService} from '../../../../services/services/game.service';
     NgIf,
     NgForOf,
     FormsModule,
-    RouterLink
+    RouterLink,
+    CommonModule,
   ],
   templateUrl: './manage-game.component.html',
   standalone: true,
   styleUrl: './manage-game.component.scss'
 })
-export class ManageGameComponent {
+export class ManageGameComponent implements OnInit {
 
   gameRequest: GameRequest = {description: '', publisher: '', releaseDate: '', title: ''};
   errorMsg: Array<string> = [];
@@ -28,8 +29,32 @@ export class ManageGameComponent {
 
   constructor(
     private gameService: GameService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
+  }
+
+  ngOnInit(): void {
+    const gameId = this.activatedRoute.snapshot.params['gameId'];
+    if(gameId){
+      this.gameService.findGameById({
+        'game-id': gameId
+      }).subscribe({
+        next: (game) => {
+          this.gameRequest = {
+            id: game.id,
+            title: game.title as string,
+            publisher: game.publisher as string,
+            releaseDate: game.releaseDate as string,
+            description: game.description as string,
+            shareable: game.shareable
+          }
+          if(game.cover){
+            this.selectedPicture = 'data:image/jpeg;base64,' + game.cover;
+          }
+        }
+      })
+    }
   }
 
   onFileSelected(event: any) {
@@ -70,4 +95,5 @@ export class ManageGameComponent {
       }
     });
   }
+
 }

@@ -47,6 +47,7 @@ public class FileStorageService {
         try{
             Files.write(targetPath, sourceFile.getBytes());
             log.info("File lementve:" + targetFilePath);
+            return targetFilePath;
         } catch (IOException e){
             log.error("A file nem lett lementve", e);
         }

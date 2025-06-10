@@ -113,10 +113,12 @@ public class GameController {
     public ResponseEntity<?> uploadGameCoverPicture(
             @PathVariable("game-id") Integer gameId,
             @Parameter()
-            @RequestPart("file") MultipartFile file,
+            @RequestPart(value = "file", required = false) MultipartFile file,
             Authentication connectedUser
     ){
         service.uploadGameCoverPicture(file, connectedUser, gameId);
         return ResponseEntity.accepted().build();
     }
+
+
 }

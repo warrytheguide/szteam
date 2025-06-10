@@ -20,7 +20,7 @@ import {GameResponse} from '../../../../services/models/game-response';
 export class GameListComponent implements OnInit {
   gameResponse: PageResponseGameResponse = {};
   protected page: number = 0;
-  private size: number = 5;
+  private size: number = 6;
   message: string = '';
   level: string = 'success';
 

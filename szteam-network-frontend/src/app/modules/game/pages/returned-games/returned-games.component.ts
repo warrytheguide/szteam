@@ -20,7 +20,7 @@ import {approveReturnBorrowGame} from '../../../../services/fn/game/approve-retu
 export class ReturnedGamesComponent implements OnInit {
   returnedGames: PageResponseBorrowedGameResponse = {};
   page = 0;
-  size = 5;
+  size = 15;
   message = '';
   level = 'success';
 

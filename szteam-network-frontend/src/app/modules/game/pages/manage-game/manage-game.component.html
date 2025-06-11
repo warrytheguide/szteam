@@ -15,6 +15,9 @@
           id="formFile"
           accept="image/*"
         >
+        <button type="button" class="btn btn-outline-danger btn-sm mt-2" (click)="removeCover()" *ngIf="selectedPicture && selectedPicture !== DEFAULT_IMAGE_BASE64">
+          <i class="fas fa-trash"></i> Kép eltávolítása
+        </button>
       </div>
     </div>
     <div class="col-9">

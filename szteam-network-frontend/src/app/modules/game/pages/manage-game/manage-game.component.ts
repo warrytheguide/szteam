@@ -70,6 +70,27 @@ export class ManageGameComponent implements OnInit {
   }
 
   saveGame() {
+    if (!this.selectedGameCover && this.selectedPicture && this.selectedPicture !== this.DEFAULT_IMAGE_BASE64) {
+      const base64Data = this.selectedPicture.split(',')[1];
+      const byteCharacters = atob(base64Data);
+      const byteArrays = [];
+
+      for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+        const slice = byteCharacters.slice(offset, offset + 512);
+        const byteNumbers = new Array(slice.length);
+
+        for (let i = 0; i < slice.length; i++) {
+          byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+      }
+
+      const blob = new Blob(byteArrays, {type: 'image/jpeg'});
+      this.selectedGameCover = new File([blob], 'existing_cover.jpg', {type: 'image/jpeg'});
+    }
+
     this.gameService.saveGame({
       body: this.gameRequest
     }).subscribe({
@@ -81,7 +102,7 @@ export class ManageGameComponent implements OnInit {
               file: this.selectedGameCover
             }
           }).subscribe({
-            next:() => {
+            next: () => {
               this.router.navigate(['/games/my-games']);
             }
           });
@@ -94,5 +115,11 @@ export class ManageGameComponent implements OnInit {
       }
     });
   }
+
+  removeCover() {
+    this.selectedPicture = undefined;
+    this.selectedGameCover = undefined;
+  }
+
 
 }

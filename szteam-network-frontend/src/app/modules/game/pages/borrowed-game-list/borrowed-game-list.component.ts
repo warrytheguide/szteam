@@ -28,7 +28,7 @@ export class BorrowedGameListComponent implements OnInit {
   borrowedGames: PageResponseBorrowedGameResponse = {};
   reviewRequest: ReviewRequest = {comment: "", gameId: 0, score: 0};
   page = 0;
-  size = 5;
+  size = 15;
   selectedGame: BorrowedGameResponse | undefined = undefined;
 
   constructor(

@@ -1,6 +1,7 @@
 package com.kristof.szteam.review;
 
 import com.kristof.szteam.common.PageResponse;
+import com.kristof.szteam.user.User;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,11 +28,17 @@ public class ReviewController {
     @GetMapping("/game/{game-id}")
     public ResponseEntity<PageResponse<ReviewResponse>> findAllReviewsByGame(
             @PathVariable("game-id") Integer gameId,
-            @RequestParam(name = "page", defaultValue = "0", required = false) int page,
-            @RequestParam(name = "size", defaultValue = "10", required = false) int size,
-            Authentication connectedUser
-    ){
-        return ResponseEntity.ok(service.findAllReviewsByGame(gameId, page, size, connectedUser));
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Authentication authentication
+    ) {
+        Integer userId = authentication != null ?
+                ((User) authentication.getPrincipal()).getId() :
+                null;
+
+        return ResponseEntity.ok(
+                service.findAllReviewsByGame(gameId, page, size, userId)
+        );
     }
 
 }

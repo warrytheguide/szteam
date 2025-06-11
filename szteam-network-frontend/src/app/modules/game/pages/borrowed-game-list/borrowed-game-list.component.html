@@ -29,9 +29,22 @@
           <app-rating [rating]="reviewRequest.score || 0"></app-rating>
           {{ reviewRequest.score }}
         </div>
-        <div class = "col-12">
+        <div class="col-12">
           <label for="review" class="form-label">Értékelés:</label>
-          <textarea [(ngModel)]="reviewRequest.comment" rows="4" class="form-control" id="review" name="review" placeholder="Mit gondoltál erről a játékról?"></textarea>
+          <textarea
+            [(ngModel)]="reviewRequest.comment"
+            rows="4"
+            class="form-control"
+            id="review"
+            name="review"
+            placeholder="Mit gondoltál erről a játékról?"
+            maxlength="255"
+          ></textarea>
+          <div class="d-flex justify-content-between align-items-center mt-1">
+            <small>
+              {{ reviewRequest.comment?.length || 0 }} / 255 karakter
+            </small>
+          </div>
         </div>
         <div class="d-flex justify-content-end gap-2 col-12">
           <button (click)="returnGame(true)" type="submit" class="btn btn-outline-primary">

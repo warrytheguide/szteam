@@ -51,7 +51,6 @@ export class GameCardComponent {
 
   @Output() private share: EventEmitter<GameResponse> = new EventEmitter<GameResponse>();
   @Output() private archive: EventEmitter<GameResponse> = new EventEmitter<GameResponse>();
-  @Output() private addToWaitingList: EventEmitter<GameResponse> = new EventEmitter<GameResponse>();
   @Output() private borrow: EventEmitter<GameResponse> = new EventEmitter<GameResponse>();
   @Output() private edit: EventEmitter<GameResponse> = new EventEmitter<GameResponse>();
   @Output() private details: EventEmitter<GameResponse> = new EventEmitter<GameResponse>();
@@ -62,10 +61,6 @@ export class GameCardComponent {
 
   onBorrow() {
     this.borrow.emit(this._game);
-  }
-
-  onAddToWaitingList() {
-    this.addToWaitingList.emit(this._game);
   }
 
   onEdit() {

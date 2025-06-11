@@ -34,17 +34,18 @@ public class ReviewService {
         if(Objects.equals(game.getOwner().getId(), user.getId())) {
             throw new OperationNotPermittedException("A sajat jatekod nem tudod ertekelni");
         }
-        Review review = reviewMapper.toReview(request);
+        Review review = reviewMapper.toReview(request, user);
         return reviewRepository.save(review).getId();
     }
 
-    public PageResponse<ReviewResponse> findAllReviewsByGame(Integer gameId, int page, int size, Authentication connectedUser) {
+    public PageResponse<ReviewResponse> findAllReviewsByGame(Integer gameId, int page, int size, Integer userId) {
         Pageable pageable = PageRequest.of(page, size);
-        User user = ((User) connectedUser.getPrincipal());
         Page<Review> reviews = reviewRepository.findAllByGameId(gameId, pageable);
+
         List<ReviewResponse> reviewResponses = reviews.stream()
-                .map(r -> reviewMapper.toReviewResponse(r, user.getId()))
+                .map(review -> reviewMapper.toReviewResponse(review, userId))
                 .toList();
+
         return new PageResponse<>(
                 reviewResponses,
                 reviews.getNumber(),

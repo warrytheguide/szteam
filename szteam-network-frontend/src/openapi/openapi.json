@@ -778,6 +778,13 @@
           },
           "ownReview": {
             "type": "boolean"
+          },
+          "author": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },

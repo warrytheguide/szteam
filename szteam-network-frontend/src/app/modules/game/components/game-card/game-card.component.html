@@ -31,8 +31,7 @@
     </div>
     <div class="d-flex gap-2" *ngIf="!manage">
       <i (click)="onShowDetails()" class="fas fa-circle-info text-primary"></i>
-      <i (click)="onBorrow()" class="fas fa-list-check text-primary"></i>
-      <i (click)="onAddToWaitingList()" class="fas fa-heart text-primary"></i>
+      <i (click)="onBorrow()" class="fas fa-plus text-primary"></i>
     </div>
     <div class="d-flex gap-2" *ngIf="manage">
       <i (click)="onEdit()" class="fas fa-edit text-success"></i>

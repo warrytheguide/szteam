@@ -2,16 +2,21 @@ import {Component, OnInit} from '@angular/core';
 import {GameService} from '../../../../services/services/game.service';
 import {Router} from '@angular/router';
 import {PageResponseGameResponse} from '../../../../services/models/page-response-game-response';
-import {NgForOf, NgIf} from '@angular/common';
+import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import {GameCardComponent} from '../../components/game-card/game-card.component';
 import {GameResponse} from '../../../../services/models/game-response';
+import {ReviewService} from '../../../../services/services/review.service';
+import {ReviewResponse} from '../../../../services/models/review-response';
+import {PageResponseReviewResponse} from '../../../../services/models/page-response-review-response';
+import {FindAllReviewsByGame$Params} from '../../../../services/fn/review/find-all-reviews-by-game';
 
 @Component({
   selector: 'app-game-list',
   imports: [
     NgForOf,
     GameCardComponent,
-    NgIf
+    NgIf,
+    DatePipe
   ],
   templateUrl: './game-list.component.html',
   standalone: true,
@@ -23,10 +28,15 @@ export class GameListComponent implements OnInit {
   private size: number = 6;
   message: string = '';
   level: string = 'success';
+  selectedGame: GameResponse | null = null;
+  reviews: ReviewResponse[] = [];
+  currentPage = 0;
+  totalPages = 0;
 
   constructor(
     private gameService: GameService,
-    private router: Router
+    private router: Router,
+    private reviewService: ReviewService,
   ) {
   }
 
@@ -90,6 +100,28 @@ export class GameListComponent implements OnInit {
       }
     })
 
+  }
+
+  loadReviews(gameId: number): void {
+    const params: FindAllReviewsByGame$Params = {
+      'game-id': gameId,
+      page: this.currentPage,
+      size: 10
+    };
+
+    this.reviewService.findAllReviewsByGame(params).subscribe({
+      next: (response: PageResponseReviewResponse) => {
+        this.reviews = response.content || [];
+        this.totalPages = response.totalPages || 0;
+      },
+      error: (err) => console.error('Error loading reviews:', err)
+    });
+  }
+
+  onShowDetails(game: GameResponse) {
+    this.selectedGame = game;
+    this.currentPage = 0;
+    this.loadReviews(game.id as number);
   }
 }
 

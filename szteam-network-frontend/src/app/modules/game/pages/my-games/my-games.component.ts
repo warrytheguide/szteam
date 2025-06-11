@@ -74,8 +74,14 @@ export class MyGamesComponent implements OnInit {
     return this.page == this.gameResponse.totalPages as number - 1;
   }
 
-  archiveGame($event: GameResponse) {
-
+  archiveGame(game: GameResponse) {
+    this.gameService.updateArchivedStatus({
+      'game-id' : game.id as number
+    }).subscribe({
+      next:() => {
+        game.archived = !game.archived
+      }
+    })
   }
 
   shareGame(game: GameResponse) {

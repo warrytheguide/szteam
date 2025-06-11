@@ -3,29 +3,21 @@
 <div class="d-flex flex-column col-6" *ngIf="selectedGame">
   <h3>Visszajuttatás és értékelés</h3>
   <div class="d-flex flex-column col-12">
-    <div class="d-flex">
-      <div class="col-1">
-        <strong>Cím:</strong>
-      </div>
-      <div class="col-11">{{ selectedGame.title }}</div>
+    <div class="row mb-2">
+      <div class="col-4"><strong>Cím:</strong></div>
+      <div class="col-8">{{ selectedGame.title }}</div>
     </div>
-    <div class="d-flex">
-      <div class="col-1">
-        <strong>Kiadó:</strong>
-      </div>
-      <div class="col-11">{{ selectedGame.publisher }}</div>
+    <div class="row mb-2">
+      <div class="col-4"><strong>Kiadó:</strong></div>
+      <div class="col-8">{{ selectedGame.publisher }}</div>
     </div>
-    <div class="d-flex">
-      <div class="col-1">
-        <strong>Kiadás dátuma:</strong>
-      </div>
-      <div class="col-11">{{ selectedGame.releaseDate }}</div>
+    <div class="row mb-2">
+      <div class="col-4"><strong>Megjelenés:</strong></div>
+      <div class="col-8">{{ selectedGame.releaseDate }}</div>
     </div>
-    <div class="d-flex">
-      <div class="col-1">
-        <strong>Értékelés:</strong>
-      </div>
-      <div class="col-11">{{ selectedGame.rate }}</div>
+    <div class="row mb-2">
+      <div class="col-4"><strong>Értékelés:</strong></div>
+      <div class="col-8">{{ selectedGame.rate }}</div>
     </div>
   </div>
   <div>

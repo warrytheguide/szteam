@@ -145,7 +145,7 @@ public class GameService {
         Game game = gameRepository.findById(gameId)
                 .orElseThrow(() -> new EntityNotFoundException("A játék nem található: " + gameId));
         if(game.isArchived() || !game.isShareable()){
-            throw new OperationNotPermittedException("Ez a játék nem kikölcsönözhető, vagy archiválva van!");
+            throw new OperationNotPermittedException("Ez a játék nem kikölcsönözhető!");
         }
         User user = ((User) connectedUser.getPrincipal());
         if(Objects.equals(game.getOwner().getId(), user.getId())) {
@@ -167,7 +167,7 @@ public class GameService {
     public Integer returnBorrowedGame(Integer gameId, Authentication connectedUser) {
         Game game = gameRepository.findById(gameId)
                 .orElseThrow(() -> new EntityNotFoundException("A játék nem található: " + gameId));
-        if(game.isArchived() || !game.isShareable()){
+        if(game.isArchived()){
             throw new OperationNotPermittedException("Ez a játék nem kikölcsönözhető, vagy archiválva van!");
         }
         User user = ((User) connectedUser.getPrincipal());
@@ -183,12 +183,12 @@ public class GameService {
     public Integer approveReturnBorrowedGame(Integer gameId, Authentication connectedUser) {
         Game game = gameRepository.findById(gameId)
                 .orElseThrow(() -> new EntityNotFoundException("A játék nem található: " + gameId));
-        if(game.isArchived() || !game.isShareable()){
+        if(game.isArchived()){
             throw new OperationNotPermittedException("Ez a játék nem kikölcsönözhető, vagy archiválva van!");
         }
         User user = ((User) connectedUser.getPrincipal());
-        if(Objects.equals(game.getOwner().getId(), user.getId())) {
-            throw new OperationNotPermittedException("A saját játékod nem tudod visszajuttatni!");
+        if(!Objects.equals(game.getOwner().getId(), user.getId())) {
+            throw new OperationNotPermittedException(" Nem tudod visszajuttatni a játékot, mert nem a tiéd!");
         }
         GameTransactionHistory gameTransactionHistory = transactionHistoryRepository.findByGameIdAndOwnerId(gameId, user.getId())
                 .orElseThrow(() -> new OperationNotPermittedException("A játék még nem lett visszajuttatva, így nem tudod jóváhagyni!"));

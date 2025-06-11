@@ -12,7 +12,6 @@ public interface GameRepository extends JpaRepository<Game, Integer>, JpaSpecifi
             SELECT game
             FROM Game game
             WHERE game.archived = false
-            AND game.shareable = true
             AND game.owner.id != :userId
 """)
     Page<Game> findAllDisplayableGames(Pageable pageable, Integer userId);

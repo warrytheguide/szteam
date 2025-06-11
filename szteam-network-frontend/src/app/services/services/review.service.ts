@@ -14,8 +14,8 @@ import { StrictHttpResponse } from '../strict-http-response';
 import { findAllReviewsByGame } from '../fn/review/find-all-reviews-by-game';
 import { FindAllReviewsByGame$Params } from '../fn/review/find-all-reviews-by-game';
 import { PageResponseReviewResponse } from '../models/page-response-review-response';
-import { saveFeedback } from '../fn/review/save-feedback';
-import { SaveFeedback$Params } from '../fn/review/save-feedback';
+import { saveReview } from '../fn/review/save-review';
+import { SaveReview$Params } from '../fn/review/save-review';
 
 @Injectable({ providedIn: 'root' })
 export class ReviewService extends BaseService {
@@ -23,27 +23,27 @@ export class ReviewService extends BaseService {
     super(config, http);
   }
 
-  /** Path part for operation `saveFeedback()` */
-  static readonly SaveFeedbackPath = '/reviews';
+  /** Path part for operation `saveReview()` */
+  static readonly SaveReviewPath = '/reviews';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `saveFeedback()` instead.
+   * To access only the response body, use `saveReview()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  saveFeedback$Response(params: SaveFeedback$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
-    return saveFeedback(this.http, this.rootUrl, params, context);
+  saveReview$Response(params: SaveReview$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
+    return saveReview(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `saveFeedback$Response()` instead.
+   * To access the full response (for headers, for example), `saveReview$Response()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  saveFeedback(params: SaveFeedback$Params, context?: HttpContext): Observable<number> {
-    return this.saveFeedback$Response(params, context).pipe(
+  saveReview(params: SaveReview$Params, context?: HttpContext): Observable<number> {
+    return this.saveReview$Response(params, context).pipe(
       map((r: StrictHttpResponse<number>): number => r.body)
     );
   }

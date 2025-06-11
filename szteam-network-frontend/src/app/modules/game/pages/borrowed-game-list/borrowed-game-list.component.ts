@@ -7,6 +7,8 @@ import {ReviewRequest} from '../../../../services/models/review-request';
 import {FormsModule} from '@angular/forms';
 import {RatingComponent} from '../../components/rating/rating.component';
 import {RouterLink} from '@angular/router';
+import {useJSONBuildLogs} from '@angular-devkit/build-angular/src/utils/environment-options';
+import {ReviewService} from '../../../../services/services/review.service';
 
 @Component({
   selector: 'app-borrowed-game-list',
@@ -30,7 +32,8 @@ export class BorrowedGameListComponent implements OnInit {
   selectedGame: BorrowedGameResponse | undefined = undefined;
 
   constructor(
-    private gameService: GameService
+    private gameService: GameService,
+    private reviewService: ReviewService
   ) {
   }
   ngOnInit(): void {
@@ -39,7 +42,7 @@ export class BorrowedGameListComponent implements OnInit {
 
   returnBorrowGame(game: BorrowedGameResponse) {
     this.selectedGame = game;
-
+    this.reviewRequest.gameId = game.id as number;
   }
 
   private findAllBorrowedGames() {
@@ -84,6 +87,25 @@ export class BorrowedGameListComponent implements OnInit {
   }
 
   returnGame(withReview: boolean) {
+    this.gameService.returnBorrowGame({
+      'game-id': this.selectedGame?.id as number,
+    }).subscribe({
+      next:() => {
+        if(withReview) {
+          this.giveReview();
+        }
+        this.selectedGame = undefined;
+        this.findAllBorrowedGames();
+      }
+    })
+  }
 
+  private giveReview() {
+    this.reviewService.saveReview({
+      body: this.reviewRequest
+    }).subscribe({
+      next: () => {
+      }
+    });
   }
 }

@@ -1,16 +1,21 @@
 import {Component, OnInit} from '@angular/core';
 import {RouterLink} from '@angular/router';
+import {NgbCollapse} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-menu',
   imports: [
-    RouterLink
+    RouterLink,
+    NgbCollapse
   ],
   templateUrl: './menu.component.html',
   standalone: true,
   styleUrl: './menu.component.scss'
 })
 export class MenuComponent implements OnInit {
+  isMenuCollapsed = true;
+
+
   ngOnInit(): void {
       const linkColor = document.querySelectorAll('.nav-link');
       linkColor.forEach(link => {
@@ -25,6 +30,7 @@ export class MenuComponent implements OnInit {
   }
 
   logout() {
-
+    localStorage.removeItem('token');
+    window.location.reload();
   }
 }

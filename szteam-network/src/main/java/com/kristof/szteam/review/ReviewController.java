@@ -17,7 +17,7 @@ public class ReviewController {
     private final ReviewService service;
 
     @PostMapping
-    public ResponseEntity<Integer> saveFeedback(
+    public ResponseEntity<Integer> saveReview(
             @Valid @RequestBody ReviewRequest request,
             Authentication connectedUser
     ){

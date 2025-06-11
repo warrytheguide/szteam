@@ -10,12 +10,12 @@ import { RequestBuilder } from '../../request-builder';
 
 import { ReviewRequest } from '../../models/review-request';
 
-export interface SaveFeedback$Params {
+export interface SaveReview$Params {
       body: ReviewRequest
 }
 
-export function saveFeedback(http: HttpClient, rootUrl: string, params: SaveFeedback$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
-  const rb = new RequestBuilder(rootUrl, saveFeedback.PATH, 'post');
+export function saveReview(http: HttpClient, rootUrl: string, params: SaveReview$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
+  const rb = new RequestBuilder(rootUrl, saveReview.PATH, 'post');
   if (params) {
     rb.body(params.body, 'application/json');
   }
@@ -30,4 +30,4 @@ export function saveFeedback(http: HttpClient, rootUrl: string, params: SaveFeed
   );
 }
 
-saveFeedback.PATH = '/reviews';
+saveReview.PATH = '/reviews';

@@ -34,7 +34,7 @@
         "tags": [
           "Review"
         ],
-        "operationId": "saveFeedback",
+        "operationId": "saveReview",
         "requestBody": {
           "content": {
             "application/json": {
@@ -667,12 +667,15 @@
             "format": "int32"
           },
           "title": {
+            "pattern": ".*\\S.*",
             "type": "string"
           },
           "publisher": {
+            "pattern": ".*\\S.*",
             "type": "string"
           },
           "description": {
+            "pattern": ".*\\S.*",
             "type": "string"
           },
           "releaseDate": {

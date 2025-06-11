@@ -70,9 +70,9 @@
       <td><i class="fas fa-star text-warning"></i>{{game.rate}}</td>
       <td>
         <div class = "d-flex gap-2">
-          <i *ngIf="game.returned" class="fa-regular fa-paper-plane text-primary"></i>
-          <i *ngIf="!game.returned" (click)="returnBorrowGame(game)" class="fa-solid fa-paper-plane text-success"></i>
-          <i  class="fa-solid fa-circle-check" [class.text-succes]="game.returnApproved"></i>
+          <i *ngIf="game.returned" class="fa-solid fa-paper-plane text-success"></i>
+          <i *ngIf="!game.returned" (click)="returnBorrowGame(game)" class="cursor-pointer fa-regular fa-paper-plane text-primary"></i>
+          <i  class="fa-solid fa-circle-check" [class.text-success]="game.returnApproved"></i>
         </div>
       </td>
     </tr>

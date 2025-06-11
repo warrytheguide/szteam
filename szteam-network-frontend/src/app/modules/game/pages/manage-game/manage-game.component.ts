@@ -86,7 +86,6 @@ export class ManageGameComponent implements OnInit {
             }
           });
         } else {
-          // No file selected, just navigate away or display success
           this.router.navigate(['/games/my-games']);
         }
       },

@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Service
 public class ReviewMapper {
-    public Review toReview(ReviewRequest request, User user) {
+    public Review toReview(ReviewRequest request) {
         return Review.builder()
                 .score(request.score())
                 .comment(request.comment())
@@ -18,19 +18,19 @@ public class ReviewMapper {
                         .shareable(false)
                         .build()
                 )
-                .user(user)
                 .build();
     }
 
-    public ReviewResponse toReviewResponse(Review review, Integer userId) {
+    public ReviewResponse toReviewResponse(Object[] result, Integer userId) {
+        Review review = (Review) result[0];
+        User user = (User) result[1];
+
         return ReviewResponse.builder()
                 .score(review.getScore())
                 .comment(review.getComment())
-                .author(review.getUser() != null ? review.getUser().getRealUsername() : null)
+                .author(user.getRealUsername())
                 .createdAt(review.getCreatedAt())
-                .ownReview(
-                        review.getCreatedBy() != null && review.getCreatedBy().equals(userId)
-                )
+                .ownReview(review.getCreatedBy() != null && review.getCreatedBy().equals(userId))
                 .build();
     }
 }

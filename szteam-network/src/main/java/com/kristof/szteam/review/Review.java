@@ -32,10 +32,6 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "game_id")
     private Game game;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;

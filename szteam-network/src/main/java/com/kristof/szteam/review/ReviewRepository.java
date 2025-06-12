@@ -8,9 +8,10 @@ import org.springframework.data.jpa.repository.Query;
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
     @Query("""
-        SELECT review
+        SELECT review, user
         FROM Review review
+        JOIN User user ON review.createdBy = user.id
         WHERE review.game.id = :gameId
 """)
-    Page<Review> findAllByGameId(Integer gameId, Pageable pageable);
+    Page<Object[]> findAllReviewsWithUserByGameId(Integer gameId, Pageable pageable);
 }

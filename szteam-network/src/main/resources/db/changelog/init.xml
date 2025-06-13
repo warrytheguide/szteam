@@ -1,0 +1,162 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="krist (generated)" id="1749823108595-1">
+        <createTable tableName="role">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="role_pkey"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="yourname" id="seed-default-roles">
+        <insert tableName="role">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="USER"/>
+            <column name="created_date" valueDate="2025-06-13T00:00:00"/>
+        </insert>
+    </changeSet>
+    <changeSet author="krist (generated)" id="1749823108595-2">
+        <createTable tableName="_user">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="_user_pkey"/>
+            </column>
+            <column name="account_locked" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="enabled" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="username" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="krist (generated)" id="1749823108595-3">
+        <addUniqueConstraint columnNames="name" constraintName="uk8sewwnpamngi6b1dwaa88askk" tableName="role"/>
+    </changeSet>
+    <changeSet author="krist (generated)" id="1749823108595-4">
+        <addUniqueConstraint columnNames="email" constraintName="ukk11y3pdtsrjgy8w9b6q4bjwrx" tableName="_user"/>
+    </changeSet>
+    <changeSet author="krist (generated)" id="1749823108595-5">
+        <createTable tableName="_user_roles">
+            <column name="users_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="roles_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="krist (generated)" id="1749823108595-6">
+        <createTable tableName="game">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="game_pkey"/>
+            </column>
+            <column name="created_by" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="INTEGER"/>
+            <column name="last_modified_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="archived" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="game_cover" type="VARCHAR(255)"/>
+            <column name="publisher" type="VARCHAR(255)"/>
+            <column name="release_date" type="date"/>
+            <column name="shareable" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="owner_id" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="krist (generated)" id="1749823108595-7">
+        <createTable tableName="game_transaction_history">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="game_transaction_history_pkey"/>
+            </column>
+            <column name="created_by" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="INTEGER"/>
+            <column name="last_modified_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="return_approved" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="returned" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="game_id" type="INTEGER"/>
+            <column name="user_id" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="krist (generated)" id="1749823108595-8">
+        <createTable tableName="review">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="review_pkey"/>
+            </column>
+            <column name="created_by" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="INTEGER"/>
+            <column name="last_modified_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="comment" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="score" type="FLOAT8"/>
+            <column name="game_id" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="krist (generated)" id="1749823108595-9">
+        <createTable tableName="token">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="token_pkey"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="expires_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="token" type="VARCHAR(255)"/>
+            <column name="validated_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="user_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="krist (generated)" id="1749823108595-10">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="token" constraintName="fkiblu4cjwvyntq3ugo31klp1c6" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="_user" validate="true"/>
+    </changeSet>
+    <changeSet author="krist (generated)" id="1749823108595-11">
+        <addForeignKeyConstraint baseColumnNames="users_id" baseTableName="_user_roles" constraintName="fkkna43mk14wb08rt62w1982ki6" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="_user" validate="true"/>
+    </changeSet>
+    <changeSet author="krist (generated)" id="1749823108595-12">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="game_transaction_history" constraintName="fklwis60dy17pnt6t9bhchgcb6k" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="_user" validate="true"/>
+    </changeSet>
+    <changeSet author="krist (generated)" id="1749823108595-13">
+        <addForeignKeyConstraint baseColumnNames="game_id" baseTableName="review" constraintName="fkqqxxwdsxhhxc7t2ho2acg2m4p" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="game" validate="true"/>
+    </changeSet>
+    <changeSet author="krist (generated)" id="1749823108595-14">
+        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="game" constraintName="fks22pxrgcuqiohin7bpbnprb75" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="_user" validate="true"/>
+    </changeSet>
+    <changeSet author="krist (generated)" id="1749823108595-15">
+        <addForeignKeyConstraint baseColumnNames="game_id" baseTableName="game_transaction_history" constraintName="fksfovllp57wfyubctwlbas8jrk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="game" validate="true"/>
+    </changeSet>
+    <changeSet author="krist (generated)" id="1749823108595-16">
+        <addForeignKeyConstraint baseColumnNames="roles_id" baseTableName="_user_roles" constraintName="fktq7v0vo9kka3qeaw2alou2j8p" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="role" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

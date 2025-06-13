@@ -30,6 +30,7 @@ export class BorrowedGameListComponent implements OnInit {
   page = 0;
   size = 15;
   selectedGame: BorrowedGameResponse | undefined = undefined;
+  reviewWarning: string | undefined = undefined;
 
   constructor(
     private gameService: GameService,
@@ -87,6 +88,17 @@ export class BorrowedGameListComponent implements OnInit {
   }
 
   returnGame(withReview: boolean) {
+    if (withReview) {
+      if (!this.reviewRequest.comment || this.reviewRequest.comment.trim().length === 0) {
+        this.reviewWarning = "Az értékelés szövege nem lehet üres!";
+        return;
+      }
+      if (!this.reviewRequest.score || this.reviewRequest.score === 0) {
+        this.reviewWarning = "Legalább fél csillagra kell értékelnie!";
+        return;
+      }
+    }
+    this.reviewWarning = undefined;
     this.gameService.returnBorrowGame({
       'game-id': this.selectedGame?.id as number,
     }).subscribe({

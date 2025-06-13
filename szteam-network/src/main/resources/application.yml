@@ -5,7 +5,8 @@ spring:
     multipart:
       max-file-size: 60MB
   liquibase:
-    enabled: false
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
 
 springdoc:
   default-produces-media-type: application/json

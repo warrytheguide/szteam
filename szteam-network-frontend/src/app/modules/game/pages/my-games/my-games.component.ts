@@ -26,7 +26,7 @@ import {PageResponseReviewResponse} from '../../../../services/models/page-respo
 export class MyGamesComponent implements OnInit {
   gameResponse: PageResponseGameResponse = {};
   protected page: number = 0;
-  private size: number = 5;
+  private size: number = 6;
   selectedGame: GameResponse | null = null;
   reviews: ReviewResponse[] = [];
   currentReviewPage = 0;

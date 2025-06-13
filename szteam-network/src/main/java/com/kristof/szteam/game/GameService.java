@@ -167,9 +167,6 @@ public class GameService {
     public Integer returnBorrowedGame(Integer gameId, Authentication connectedUser) {
         Game game = gameRepository.findById(gameId)
                 .orElseThrow(() -> new EntityNotFoundException("A játék nem található: " + gameId));
-        if(game.isArchived()){
-            throw new OperationNotPermittedException("Ez a játék nem kikölcsönözhető, vagy archiválva van!");
-        }
         User user = ((User) connectedUser.getPrincipal());
         if(Objects.equals(game.getOwner().getId(), user.getId())) {
             throw new OperationNotPermittedException("A saját játékod nem tudod visszajuttatni!");

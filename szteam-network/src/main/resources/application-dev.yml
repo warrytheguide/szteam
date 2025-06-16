@@ -15,20 +15,20 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   mail:
-    host: localhost
-    port: 1025
-    username: kri
-    password: kri
+    host: smtp.gmail.com
+    port: 465
+    username: kristof.zsoldos@gmail.com
+    password: xsop djce vwmd skvl
     properties:
       mail:
         smtp:
-          trust: "*"
-        auth: true
+          auth: true
+          ssl:
+            enable: true
+            trust: "*"
         starttls:
           enable: true
-          connectiontimeout: 5000
-          timeout: 3000
-          writetimeout: 5000
+    protocol: smtp
 
 application:
   security:
@@ -37,7 +37,7 @@ application:
       expiration: 86400000
     mailing:
       frontend:
-        activation-url: http://localhost:4200/activate-account
+        activation-url: http://localhost:8080/activate-account
     file:
       upload:
         photos-output-path: ./uploads

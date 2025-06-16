@@ -3,8 +3,8 @@ services:
     container_name: postgres-sql-szt
     image: postgres
     environment:
-      POSTGRES_USER: username
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin123
       PGDATA: /var/lib/postgresql/data
       POSTGRES_DB: szteam_network
     volumes:
@@ -21,6 +21,24 @@ services:
       - 1080:1080
       - 1025:1025
 
+  szt-api:
+    container_name: szt-api
+    image: szt/szt:1.0.0
+    ports:
+      - 8088:8088
+    networks:
+      - spring-demo
+    depends_on:
+      - postgres
+  szt-frontend:
+    container_name: szt-frontend
+    image: szt/szt-frontend:1.0.0
+    ports:
+      - 8080:80
+    networks:
+      - spring-demo
+    depends_on:
+      - szt-api
 
 networks:
   spring-demo:

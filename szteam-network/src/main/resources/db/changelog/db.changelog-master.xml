@@ -7,13 +7,17 @@
 
 
     <!--példa-->
-    <!--<changeSet id="1" author="yourname">
+    <!--<changeSet id="1" author="kristof">
         <createTable tableName="example_table">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="VARCHAR(255)"/>
         </createTable>
+    </changeSet>-->
+
+    <!--<changeSet id="2" author="kristof">
+        <dropTable tableName="example_table"/>
     </changeSet>-->
 
 </databaseChangeLog>
